@@ -1,9 +1,10 @@
+require "pry"
+
 class Wordfreq
+
   STOP_WORDS = ['a', 'an', 'and', 'are', 'as', 'at', 'be', 'by', 'for', 'from',
     'has', 'he', 'i', 'in', 'is', 'it', 'its', 'of', 'on', 'that', 'the', 'to',
     'were', 'will', 'with']
-
-FILENAME = "Now, therefore I, Abraham Lincoln, President of the United States, by virtue of the power in me vested as Commander-in-Chief, of the Army and Navy of the United States in time of actual armed rebellion against the authority and government of the United States, and as a fit and necessary war measure for suppressing said rebellion, do, on this first day of January."
 
   def initialize(filename)
     @filename = filename
@@ -44,13 +45,11 @@ FILENAME = "Now, therefore I, Abraham Lincoln, President of the United States, b
   end
 
   def print_report
-    word_count_hash = frequencies
-    sorted_array = word_count_hash.sort_by do |key, value| 
-      [-value, key]
-    end
-    sorted_hash = sorted_array.take(10).to_h
+    sorted_array = top_words(10)
+    sorted_hash = sorted_array.to_h
     sorted_hash.each do |key, value|
-     puts " #{key} | #{value.times { print "*"}}"
+    stars = "*" * value
+    puts " #{key.rjust(7)} | #{value.to_s.ljust(2)} #{stars}"
     end
   end
 end
